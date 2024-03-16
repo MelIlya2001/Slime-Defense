@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Сastle : Abstract_friend
+public class Air_slime : Abstract_Slime
 {
-
-
+   
 
 }

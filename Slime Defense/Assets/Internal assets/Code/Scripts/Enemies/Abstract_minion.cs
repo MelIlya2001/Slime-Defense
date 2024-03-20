@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Abstract_minion : Abstract_enemy
 {
+    [SerializeField] public Castle_enemy.EnemyInfo.EnemyType type;
     [SerializeField] protected float count_gold;
     [SerializeField] protected float speed;
     [SerializeField] protected Vector3 move_direction = Vector3.right;
     [Space]
 
+    [Header ("Attack")]
     [SerializeField] protected float point_damage;
     [SerializeField] protected float speed_attack;
     [SerializeField] protected float distance_attack;
@@ -31,17 +33,6 @@ public class Abstract_minion : Abstract_enemy
 
     protected RaycastHit hit;
     private float taimer_for_attack;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     protected virtual void FixedUpdate()
     {
@@ -61,16 +52,12 @@ public class Abstract_minion : Abstract_enemy
 
     public override void TakeDamage(float damage, string[] elements)
     {
-        this.hp -= damage;
+        
+        hp -= damage;
         Debug.Log("Больно в ноге");
-        if (this.hp <= 0) Deth_Skill();
+        if (hp <= 0) Castle_enemy.Instance.DestroyEnemy(gameObject);
     }
 
-    protected void Deth_Skill()
-    {
-        //описание посмертного умения слайма
-        Destroy(this.gameObject);
-    }
 
     protected void AutoAttack(RaycastHit hit)
     {

@@ -6,22 +6,14 @@ using UnityEngine;
 
 public abstract class Abstract_Slime : Abstract_friend
 {
-    enum Element{
-        Fire,
-        Water,
-        Air,
-        Terra
-    }
 
-
-
-    [SerializeField] protected string[] elements;
+    [SerializeField] public Castle_enemy.SlimeInfo.SlimeType type;
     [Space]
 
     [SerializeField] protected float speed;
     [SerializeField] protected Vector3 move_direction = Vector3.left;
     [Space]
-
+    [Header ("Attack")]
     [SerializeField] protected float distance_attack = 20f;
     [SerializeField] protected float delay_attack;
     [SerializeField] protected float point_damage;
@@ -33,11 +25,13 @@ public abstract class Abstract_Slime : Abstract_friend
     // Start is called before the first frame update
 
 
+    protected string[] elements;
     protected RaycastHit hit;
     protected float taimer_for_attack;
     
-    void Start()
+    void Awake()
     {
+        elements = type.ToString().Split("_");
     }
 
     // Update is called once per frame

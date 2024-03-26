@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class Abstract_Slime : Abstract_friend
 {
 
-    [SerializeField] public Castle_enemy.SlimeInfo.SlimeType type;
+    [SerializeField] public PoolControl.SlimeType type;
     [Space]
 
     [SerializeField] protected float speed;
@@ -31,7 +31,7 @@ public abstract class Abstract_Slime : Abstract_friend
     
     void Awake()
     {
-        elements = type.ToString().Split("_");
+       // elements = type.ToString().Split("_");
     }
 
     // Update is called once per frame

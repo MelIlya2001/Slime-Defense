@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class Abstract_projectile : MonoBehaviour
 {
-    [SerializeField] public Castle_enemy.ProjectileInfo.ProjectileType type;
+    [SerializeField] public PoolControl.ProjectileType type;
 }

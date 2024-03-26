@@ -2,18 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class Castle_enemy : Abstract_enemy
+
+public class Castle_enemy : Abstract_enemy 
 {
     
-    public static Castle_enemy Instance;
+
+    [Serializable]
+    public struct Wave{
+         public struct WaveInfo{
+            public uint delay_seconds_to_summon;
+            public PoolControl.EnemyType enemyType;
+        }
+        
+        public float delay_seconds_to_start;      
+        public List<WaveInfo> enemyInfos;
+    } 
+
 
     [Header ("Spawn of enemy")]
-    [SerializeField] private byte count_waves;
-    [SerializeField] private uint delay_spawn_wave;
+    [SerializeField] private List<Wave> waves;
+    private float timer_wave;
+    private float timer_summon;
+    private int current_wave;
 
 
-
+/*
+    
     [Serializable]
     public struct EnemyInfo
     {
@@ -88,7 +104,7 @@ public class Castle_enemy : Abstract_enemy
     
     [Header ("Enemies")]
     [SerializeField] private List<EnemyInfo> enemiesInfo;
-    private Dictionary<EnemyInfo.EnemyType, Pool> enemy_pools;
+    private Dictionary<EnemyInfo.EnemyType, ObjectPool<GameObject>> enemy_pools;
 
     [Header ("Projectiles objects")]
     [SerializeField] private List<ProjectileInfo> projectilesInfo;
@@ -99,7 +115,7 @@ public class Castle_enemy : Abstract_enemy
     private Dictionary<SlimeInfo.SlimeType, Pool> slime_pools;
 
 
-
+    
 
 
   private void Awake()
@@ -109,157 +125,71 @@ public class Castle_enemy : Abstract_enemy
         if (Instance == null)
             Instance = this;
         
-        enemy_pools = new Dictionary<EnemyInfo.EnemyType, Pool>();
+        enemy_pools = new Dictionary<EnemyInfo.EnemyType, ObjectPool<GameObject>>();
         projectile_pools = new Dictionary<ProjectileInfo.ProjectileType, Pool>();
         slime_pools = new Dictionary<SlimeInfo.SlimeType, Pool>();
-        InitEnemyPool();
-        InitProjectilePool();
-        InitSlimePool();
+        InitPool();
+
     }
 
 
     //Методы для работы с пуллами объектов. Из-за желания разделить пулл на 3 части по типам объектов пришлось 
     //прибегнуть к костылям в виде dynamic типа данных, т.к. у каждого пулла свой enum
-    private void InitEnemyPool(){
+    private void InitPool(){
         GameObject empty = new GameObject();
-
+        
         foreach (var obj in enemiesInfo){
-            GameObject container = Instantiate(empty, transform, false);
+            GameObject container = Instantiate(empty, transform.parent, false);
             container.name = obj.Type.ToString();
+            
 
-            enemy_pools[obj.Type] = new Pool(container.transform);
+            enemy_pools[obj.Type] = new ObjectPool<GameObject>(() => {
+                Debug.Log("1");
+                return Instantiate(obj.Prefab, container.transform);     
+            },  prefab => {
+                Debug.Log("2");
+                prefab.SetActive(true);                                                         //OnGet function
+            }, prefab => {
+                Debug.Log("3");
+                prefab.SetActive(false);                                                        //OnRelease()
+            },  prefab => {
+                Debug.Log("4");
+                Destroy(prefab);                                                                //OnDelete()        
+            },  false, obj.StartCount, obj.StartCount + 10);
 
-            for (int i = 0; i < obj.StartCount; i++){
-                GameObject in_obj = InstantiateEnemy(obj.Type, container.transform);
-                enemy_pools[obj.Type].Objects.Enqueue(in_obj);
+            
+        }   
+        Destroy(empty);
+    }
+*/
+  
+    void Start(){
+        timer_wave = waves[current_wave].delay_seconds_to_start;
+    }
+
+    void FixedUpdate(){
+        if (current_wave >= waves.Count) return;
+        
+        if (timer_wave >= 0){
+            timer_wave -= Time.fixedDeltaTime;
+        } else {
+            if (waves[current_wave].enemyInfos.Count <= 0) {
+                current_wave++;
+                timer_wave = waves[current_wave].delay_seconds_to_start;
+            }
+
+            if (timer_summon < 0)
+            {
+                PoolControl.Instance.GetObject(waves[current_wave].enemyInfos[0].enemyType, PoolControl.Instance.enemy_pools);
+                waves[current_wave].enemyInfos.RemoveAt(0);
+                timer_summon = waves[current_wave].enemyInfos[0].delay_seconds_to_summon;
+            } else{ 
+                timer_summon -= Time.fixedDeltaTime;
             }
         }
-
-        Destroy(empty);
-
+        
     }
-
-    private GameObject InstantiateEnemy(EnemyInfo.EnemyType type, Transform parent){
-        GameObject in_obj = Instantiate(enemiesInfo.Find(x => x.Type == type).Prefab, parent);
-        in_obj.SetActive(false);
-        return in_obj;
-    }
-
-    public GameObject GetEnemy(EnemyInfo.EnemyType type){
-        GameObject obj = enemy_pools[type].Objects.Count > 0 ?
-            enemy_pools[type].Objects.Dequeue() : InstantiateEnemy(type, enemy_pools[type].Container);
-
-        obj.SetActive(true);
-        return obj;
-    }
-
-    public void DestroyEnemy(GameObject obj){
-        enemy_pools[obj.GetComponent<Abstract_minion>().type].Objects.Enqueue(obj);
-        obj.SetActive(false);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void InitProjectilePool(){
-        GameObject empty = new GameObject();
-
-        foreach (var obj in projectilesInfo){
-            GameObject container = Instantiate(empty, transform, false);
-            container.name = obj.Type.ToString();
-
-            projectile_pools[obj.Type] = new Pool(container.transform);
-
-            for (int i = 0; i < obj.StartCount; i++){
-                GameObject in_obj = InstantiateProjectile(obj.Type, container.transform);
-                projectile_pools[obj.Type].Objects.Enqueue(in_obj);
-            }
-        }
-
-        Destroy(empty);
-
-    }
-
-    private GameObject InstantiateProjectile(ProjectileInfo.ProjectileType type, Transform parent){
-        GameObject in_obj = Instantiate(projectilesInfo.Find(x => x.Type == type).Prefab, parent);
-        in_obj.SetActive(false);
-        return in_obj;
-    }
-
-    public GameObject GetProjectile(ProjectileInfo.ProjectileType type){
-        GameObject obj = projectile_pools[type].Objects.Count > 0 ?
-            projectile_pools[type].Objects.Dequeue() : InstantiateProjectile(type, projectile_pools[type].Container);
-
-        obj.SetActive(true);
-        return obj;
-    }
-
-     public void DestroyProjectile(GameObject obj){
-        projectile_pools[obj.GetComponent<Abstract_projectile>().type].Objects.Enqueue(obj);
-        obj.SetActive(false);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void InitSlimePool(){
-        GameObject empty = new GameObject();
-
-        foreach (var obj in slimesInfo){
-            GameObject container = Instantiate(empty, transform, false);
-            container.name = obj.Type.ToString();
-
-            slime_pools[obj.Type] = new Pool(container.transform);
-
-            for (int i = 0; i < obj.StartCount; i++){
-                GameObject in_obj = InstantiateSlime(obj.Type, container.transform);
-                slime_pools[obj.Type].Objects.Enqueue(in_obj);
-            }
-        }
-
-        Destroy(empty);
-
-    }
-
-    private GameObject InstantiateSlime(SlimeInfo.SlimeType type, Transform parent){
-        GameObject in_obj = Instantiate(slimesInfo.Find(x => x.Type == type).Prefab, parent);
-        in_obj.SetActive(false);
-        return in_obj;
-    }
-
-    public GameObject GetSlime(SlimeInfo.SlimeType type){
-        GameObject obj = slime_pools[type].Objects.Count > 0 ?
-            slime_pools[type].Objects.Dequeue() : InstantiateSlime(type, slime_pools[type].Container);
-
-        obj.SetActive(true);
-        return obj;
-    }
-
-
-    public void DestroySlime(GameObject obj){
-        slime_pools[obj.GetComponent<Abstract_Slime>().type].Objects.Enqueue(obj);
-        obj.SetActive(false);
-    }
-
-   
+    
 }
+
+

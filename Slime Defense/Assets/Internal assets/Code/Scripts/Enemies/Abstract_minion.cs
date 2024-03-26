@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Abstract_minion : Abstract_enemy
 {
-    [SerializeField] public Castle_enemy.EnemyInfo.EnemyType type;
+    [SerializeField] public PoolControl.EnemyType type;
     [SerializeField] protected float count_gold;
     [SerializeField] protected float speed;
     [SerializeField] protected Vector3 move_direction = Vector3.right;
@@ -55,7 +55,7 @@ public class Abstract_minion : Abstract_enemy
         
         hp -= damage;
         Debug.Log("Больно в ноге");
-        if (hp <= 0) Castle_enemy.Instance.DestroyEnemy(gameObject);
+       // if (hp <= 0) Castle_enemy.Instance.DestroyEnemy(gameObject);
     }
 
 

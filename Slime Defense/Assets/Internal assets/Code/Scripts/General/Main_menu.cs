@@ -9,4 +9,6 @@ public class Main_menu : MonoBehaviour
         PlayerPrefs.SetString("loading_scene", scene_name);
         SceneManager.LoadScene("Loader_Scene");
     }
+
+    
 }

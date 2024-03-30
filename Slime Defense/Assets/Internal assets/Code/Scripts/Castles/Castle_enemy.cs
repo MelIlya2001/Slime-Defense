@@ -34,6 +34,7 @@ public class Castle_enemy : Abstract_enemy
 
     void Start(){
         timer_wave = waves[current_wave].delay_seconds_to_start;
+        
     }
 
     void FixedUpdate(){
@@ -52,6 +53,7 @@ public class Castle_enemy : Abstract_enemy
                 //start_position
                 var enemy_posY = fly_enemies.Contains(waves[current_wave].enemyInfos[0].enemyType) ? flying_enemy_posY : walking_enemy_posY;
                 enemy.transform.position = new Vector3(transform.position.x, enemy_posY, transform.position.z);
+                Debug.Log(enemy.transform.position);
 
                 waves[current_wave].enemyInfos.RemoveAt(0);
                 timer_summon = waves[current_wave].enemyInfos.Count > 0 ? waves[current_wave].enemyInfos[0].delay_seconds_to_summon : 0;
@@ -64,6 +66,13 @@ public class Castle_enemy : Abstract_enemy
         
     }
     
+
+    public override void TakeDamage(float damage, string[] elements){
+        hp -= damage;
+        if (hp <= 0){
+            Menu_scripts.Instance.GameOver(true);
+        }
+    }
 }
 
 

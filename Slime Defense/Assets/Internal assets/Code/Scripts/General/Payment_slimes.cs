@@ -32,11 +32,6 @@ public class Payment_slimes : MonoBehaviour
         
         GameObject slime = PoolControl.Instance.GetObject(component_first, PoolControl.Instance.slime_pools);
         if (slime is not null) slime.transform.position = new Vector3(castle_position.x, posY, castle_position.z);
-
-        //clear buffer
-        OnShopClick();
-        OnFirstComponentClick();
-        OnSecondComponentClick();
         
     }
 
@@ -78,5 +73,11 @@ public class Payment_slimes : MonoBehaviour
             Bt_component_second.GetComponentInChildren<Text>().text = type.ToString();
             return;
         }
+    }
+
+    public void ExitShop(){
+        OnShopClick();
+        OnFirstComponentClick();
+        OnSecondComponentClick();
     }
 }

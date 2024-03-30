@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/SampleScene.unity
     guid: c850ee8c3b14cc8459e7e186857cf567
+  - enabled: 1
+    path: Assets/Internal assets/Levels/Scenes/Beutifull_Map.unity
+    guid: 2673249fff09f76448dada26f14624d1
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
       guid: e42da33d5cecd274ea2d547235229226, type: 2}

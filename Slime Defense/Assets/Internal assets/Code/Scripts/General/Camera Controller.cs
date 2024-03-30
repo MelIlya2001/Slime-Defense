@@ -61,7 +61,7 @@ public class CameraController : MonoBehaviour
             //print("origin " + dragOrigin + "newPosition" + GetWorldPositionOnPlane(Input.mousePosition, 0) + " =difference " + difference);           для дебага
             
 
-            if (difference.x + cam.transform.position.x >= start_level.x || difference.x + cam.transform.position.x <= end_level.x) return;
+            if (difference.x + cam.transform.position.x <= start_level.x || difference.x + cam.transform.position.x >= end_level.x) return;
 
             cam.transform.position += new Vector3(difference.x, 0, 0);
 

@@ -4,9 +4,21 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Internal assets/Levels/Scenes/Main_menu.unity
+    guid: be0bc41327ba9604f99b128a1c5bb62f
+  - enabled: 1
+    path: Assets/Internal assets/Levels/Scenes/Loader_Scene.unity
+    guid: e4890489ff7546a4ba262ee51c267114
+  - enabled: 1
+    path: Assets/Internal assets/Levels/Scenes/SampleScene.unity
+    guid: c850ee8c3b14cc8459e7e186857cf567
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
+      guid: e42da33d5cecd274ea2d547235229226, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 6ffc5d7b26932dc48a3687658735875f,
       type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: 323dea6b2b7d07142b19330be8acec86, type: 2}
+  m_UseUCBPForAssetBundles: 0

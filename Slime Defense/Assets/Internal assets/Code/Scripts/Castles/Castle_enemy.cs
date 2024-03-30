@@ -7,11 +7,15 @@ using UnityEngine.Pool;
 
 public class Castle_enemy : Abstract_enemy 
 {
+    [Header ("Starts_spawn_positions")]
+    [SerializeField] private List<PoolControl.EnemyType> fly_enemies; 
+    [SerializeField] private float walking_enemy_posY;
+    [SerializeField] private float flying_enemy_posY;
     
-
     [Serializable]
     public struct Wave{
-         public struct WaveInfo{
+        [Serializable]
+        public struct WaveInfo{
             public uint delay_seconds_to_summon;
             public PoolControl.EnemyType enemyType;
         }
@@ -28,141 +32,6 @@ public class Castle_enemy : Abstract_enemy
     private int current_wave;
 
 
-/*
-    
-    [Serializable]
-    public struct EnemyInfo
-    {
-        public enum EnemyType{
-            Enemy_warrior,
-            Enemy_archer,
-            Enemy_standard_bearer,
-            Enemy_mouse,
-            Enemy_bomber,
-            Enemy_spearman,
-            Enemy_axeman,
-            Enemy_battering_ram,
-            Enemy_jumper,
-            Enemy_shield,
-            Enemy_boss,
-            Enemy_necromancer,
-            Enemy_blocker,
-            Enemy_elementalist
-        }
-
-
-        public EnemyType Type;
-        public GameObject Prefab;
-        public int StartCount;
-    }
-
-    [Serializable]
-    public struct ProjectileInfo
-    {
-        public enum ProjectileType{
-            element_air,
-            element_terra,
-            element_fire,
-            element_water,
-            element_ice,
-            arrow
-        }
-
-
-        public ProjectileType Type;
-        public GameObject Prefab;
-        public int StartCount;
-    }
-    
-    [Serializable]
-    public struct SlimeInfo
-    {
-        public enum SlimeType{
-            T1_air,
-            T1_terra,
-            T1_fire,
-            T1_water,
-            T2_fire_fire,
-            T2_fire_terra,
-            T2_fire_water,
-            T2_fire_air,
-            T2_air_air,
-            T2_air_terra,
-            T2_air_water,
-            T2_terra_water,
-            T2_terra_terra,
-            T2_water_water            
-        }
-        
-
-        public SlimeType Type;
-        public GameObject Prefab;
-        public int StartCount;
-    }
-    
-    
-    
-    [Header ("Enemies")]
-    [SerializeField] private List<EnemyInfo> enemiesInfo;
-    private Dictionary<EnemyInfo.EnemyType, ObjectPool<GameObject>> enemy_pools;
-
-    [Header ("Projectiles objects")]
-    [SerializeField] private List<ProjectileInfo> projectilesInfo;
-    private Dictionary<ProjectileInfo.ProjectileType, Pool> projectile_pools;
-
-    [Header ("Available slimes")]
-    [SerializeField] private List<SlimeInfo> slimesInfo;
-    private Dictionary<SlimeInfo.SlimeType, Pool> slime_pools;
-
-
-    
-
-
-  private void Awake()
-    {
-
-        //инициализируем пуллы объектов. Для удобства работы разбиты на 3 пулла по типам объекта: Враги, Слаймы, Снаряды. 
-        if (Instance == null)
-            Instance = this;
-        
-        enemy_pools = new Dictionary<EnemyInfo.EnemyType, ObjectPool<GameObject>>();
-        projectile_pools = new Dictionary<ProjectileInfo.ProjectileType, Pool>();
-        slime_pools = new Dictionary<SlimeInfo.SlimeType, Pool>();
-        InitPool();
-
-    }
-
-
-    //Методы для работы с пуллами объектов. Из-за желания разделить пулл на 3 части по типам объектов пришлось 
-    //прибегнуть к костылям в виде dynamic типа данных, т.к. у каждого пулла свой enum
-    private void InitPool(){
-        GameObject empty = new GameObject();
-        
-        foreach (var obj in enemiesInfo){
-            GameObject container = Instantiate(empty, transform.parent, false);
-            container.name = obj.Type.ToString();
-            
-
-            enemy_pools[obj.Type] = new ObjectPool<GameObject>(() => {
-                Debug.Log("1");
-                return Instantiate(obj.Prefab, container.transform);     
-            },  prefab => {
-                Debug.Log("2");
-                prefab.SetActive(true);                                                         //OnGet function
-            }, prefab => {
-                Debug.Log("3");
-                prefab.SetActive(false);                                                        //OnRelease()
-            },  prefab => {
-                Debug.Log("4");
-                Destroy(prefab);                                                                //OnDelete()        
-            },  false, obj.StartCount, obj.StartCount + 10);
-
-            
-        }   
-        Destroy(empty);
-    }
-*/
-  
     void Start(){
         timer_wave = waves[current_wave].delay_seconds_to_start;
     }
@@ -175,15 +44,20 @@ public class Castle_enemy : Abstract_enemy
         } else {
             if (waves[current_wave].enemyInfos.Count <= 0) {
                 current_wave++;
-                timer_wave = waves[current_wave].delay_seconds_to_start;
-            }
+                timer_wave = current_wave < waves.Count ? waves[current_wave].delay_seconds_to_start : 0;
+            } 
+            else if (timer_summon < 0){
+                GameObject enemy = PoolControl.Instance.GetObject(waves[current_wave].enemyInfos[0].enemyType, PoolControl.Instance.enemy_pools);
 
-            if (timer_summon < 0)
-            {
-                PoolControl.Instance.GetObject(waves[current_wave].enemyInfos[0].enemyType, PoolControl.Instance.enemy_pools);
+                //start_position
+                var enemy_posY = fly_enemies.Contains(waves[current_wave].enemyInfos[0].enemyType) ? flying_enemy_posY : walking_enemy_posY;
+                enemy.transform.position = new Vector3(transform.position.x, enemy_posY, transform.position.z);
+
                 waves[current_wave].enemyInfos.RemoveAt(0);
-                timer_summon = waves[current_wave].enemyInfos[0].delay_seconds_to_summon;
-            } else{ 
+                timer_summon = waves[current_wave].enemyInfos.Count > 0 ? waves[current_wave].enemyInfos[0].delay_seconds_to_summon : 0;
+
+            } 
+            else{ 
                 timer_summon -= Time.fixedDeltaTime;
             }
         }

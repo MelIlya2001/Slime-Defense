@@ -52,10 +52,8 @@ public class Abstract_minion : Abstract_enemy
 
     public override void TakeDamage(float damage, string[] elements)
     {
-        
         hp -= damage;
-        Debug.Log("Больно в ноге");
-       // if (hp <= 0) Castle_enemy.Instance.DestroyEnemy(gameObject);
+        if (hp <= 0) PoolControl.Instance.DestroyObject(gameObject);
     }
 
 

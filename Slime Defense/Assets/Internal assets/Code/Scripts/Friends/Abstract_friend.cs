@@ -12,13 +12,14 @@ public class Abstract_friend : MonoBehaviour
     public void TakeDamage(float damage)
     {
         this.hp -= damage;
-        Debug.Log("Больно в руке");
+        
         if (this.hp <= 0) Deth_Skill();
     }
 
-    protected void Deth_Skill()
+    protected virtual void Deth_Skill()
     {
         //описание посмертного умения слайма
         Destroy(this.gameObject);
+        Debug.Log("НеСюда");
     }
 }

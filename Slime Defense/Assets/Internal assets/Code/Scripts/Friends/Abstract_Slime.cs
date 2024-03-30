@@ -56,4 +56,11 @@ public abstract class Abstract_Slime : Abstract_friend
     {
         hit.collider.gameObject.GetComponent<Abstract_enemy>().TakeDamage(point_damage, elements);
     }
+
+
+    protected override void Deth_Skill()
+    {
+        //описание посмертного умения слайма
+        PoolControl.Instance.DestroyObject(gameObject);
+    }
 }

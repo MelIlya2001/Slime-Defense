@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Abstract_minion : Abstract_enemy
+public class Abstract_minion : MonoBehaviour, I_Abstract_character
 {
     [SerializeField] public PoolControl.EnemyType type;
     [SerializeField] protected float count_gold;
     [SerializeField] protected float speed;
     [SerializeField] protected Vector3 move_direction = Vector3.right;
+    [SerializeField] protected float max_hp;    //понадобится на будущее, когда хилера добавим
+    protected float hp;
     [Space]
 
     [Header ("Attack")]
@@ -34,6 +36,10 @@ public class Abstract_minion : Abstract_enemy
     protected RaycastHit hit;
     private float taimer_for_attack;
 
+    protected void Awake(){
+        hp = max_hp;
+    }
+
     protected virtual void FixedUpdate()
     {
         
@@ -50,15 +56,16 @@ public class Abstract_minion : Abstract_enemy
 
     }
 
-    public override void TakeDamage(float damage, string[] elements)
+    public  void TakeDamage(float damage, string[] elements)
     {
         hp -= damage;
+        Pool_text_damage.Instance.ShowDamage(damage, transform);
         if (hp <= 0) PoolControl.Instance.DestroyObject(gameObject);
     }
 
 
     protected void AutoAttack(RaycastHit hit)
     {
-        hit.collider.gameObject.GetComponent<Abstract_friend>().TakeDamage(point_damage);
+        hit.collider.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage);
     }
 }

@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 
-public class Castle_enemy : Abstract_enemy 
+public class Waves_control : MonoBehaviour
 {
-    [Header ("Starts_spawn_positions")]
     [SerializeField] private List<PoolControl.EnemyType> fly_enemies; 
+
+    [Header ("Starts_spawn_positions")]
     [SerializeField] private float walking_enemy_posY;
     [SerializeField] private float flying_enemy_posY;
     
@@ -53,8 +55,7 @@ public class Castle_enemy : Abstract_enemy
                 //start_position
                 var enemy_posY = fly_enemies.Contains(waves[current_wave].enemyInfos[0].enemyType) ? flying_enemy_posY : walking_enemy_posY;
                 enemy.transform.position = new Vector3(transform.position.x, enemy_posY, transform.position.z);
-                Debug.Log(enemy.transform.position);
-
+                
                 waves[current_wave].enemyInfos.RemoveAt(0);
                 timer_summon = waves[current_wave].enemyInfos.Count > 0 ? waves[current_wave].enemyInfos[0].delay_seconds_to_summon : 0;
 
@@ -64,14 +65,6 @@ public class Castle_enemy : Abstract_enemy
             }
         }
         
-    }
-    
-
-    public override void TakeDamage(float damage, string[] elements){
-        hp -= damage;
-        if (hp <= 0){
-            Menu_scripts.Instance.GameOver(true);
-        }
     }
 }
 

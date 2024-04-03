@@ -23,6 +23,7 @@ public class SceneLoader : MonoBehaviour
     
     void Awake(){
         Instance = this;
+        Time.timeScale = 1;
     }
 
     void Start(){

@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 34317209c2c7e2f42bafa59033110dfa,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.9168
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34317209c2c7e2f42bafa59033110dfa,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.9168
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34317209c2c7e2f42bafa59033110dfa,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.9168
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 34317209c2c7e2f42bafa59033110dfa,
         type: 3}
@@ -72,6 +72,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 34317209c2c7e2f42bafa59033110dfa,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 34317209c2c7e2f42bafa59033110dfa,
         type: 3}
@@ -176,13 +181,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976a5e3edf9ebe245845e09d3bb79c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 2
   type: 1
+  hp: 3
   speed: 20
   move_direction: {x: 1, y: 0, z: 0}
   distance_attack: 20
   delay_attack: 4
-  point_damage: 2
+  point_damage: 1
   animator: {fileID: 6686040303663136694}
   rb: {fileID: 394380959649296855}
   layerMask:

@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -117.3, y: 2.5, z: -3.1}
-  m_LocalScale: {x: 3.9168, y: 3.9168, z: 3.9168}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1278221712358594596}
   - {fileID: 9154219118417800130}
@@ -119,11 +119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35bd9a4793906fa4d99a8422def70f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 2
   type: 0
   count_gold: 0
   speed: 10
   move_direction: {x: -1, y: 0, z: 0}
+  max_hp: 10
   point_damage: 2
   speed_attack: 5
   distance_attack: 20

@@ -4,12 +4,12 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class Abstract_Slime : Abstract_friend
+public abstract class Abstract_Slime : MonoBehaviour, I_Abstract_character
 {
-
+    [Header ("Specifications")]
     [SerializeField] public PoolControl.SlimeType type;
     [Space]
-
+    [SerializeField] protected float hp;
     [SerializeField] protected float speed;
     [SerializeField] protected Vector3 move_direction = Vector3.left;
     [Space]
@@ -31,7 +31,7 @@ public abstract class Abstract_Slime : Abstract_friend
     
     void Awake()
     {
-       // elements = type.ToString().Split("_");
+
     }
 
     // Update is called once per frame
@@ -54,11 +54,16 @@ public abstract class Abstract_Slime : Abstract_friend
 
     protected void AutoAttack(RaycastHit hit)
     {
-        hit.collider.gameObject.GetComponent<Abstract_enemy>().TakeDamage(point_damage, elements);
+        hit.collider.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage, elements);
     }
 
+    public  void TakeDamage(float damage){
+        this.hp -= damage;
+        Pool_text_damage.Instance.ShowDamage(damage, transform);
+        if (this.hp <= 0) Deth_Skill();
+    }
 
-    protected override void Deth_Skill()
+    private void Deth_Skill()
     {
         //описание посмертного умения слайма
         PoolControl.Instance.DestroyObject(gameObject);

@@ -1095,7 +1095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fly_enemies: 03000000
-  walking_enemy_posY: 2.5
+  walking_enemy_posY: 0
   flying_enemy_posY: 11
   waves:
   - delay_seconds_to_start: 3
@@ -1103,12 +1103,12 @@ MonoBehaviour:
     - delay_seconds_to_summon: 0
       enemyType: 0
     - delay_seconds_to_summon: 3
-      enemyType: 3
+      enemyType: 0
   - delay_seconds_to_start: 3
     enemyInfos:
     - delay_seconds_to_summon: 0
       enemyType: 0
-    - delay_seconds_to_summon: 3
+    - delay_seconds_to_summon: 1
       enemyType: 0
 --- !u!114 &479989307
 MonoBehaviour:
@@ -1124,10 +1124,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesInfo:
   - Type: 0
-    Prefab: {fileID: 644388817183859174, guid: 4cd6287d216ffaa4e809ccda38c3259e, type: 3}
-    StartCount: 5
-  - Type: 3
-    Prefab: {fileID: 644388817183859174, guid: 4cd6287d216ffaa4e809ccda38c3259e, type: 3}
+    Prefab: {fileID: 7521803948870330941, guid: 19b8002ebe99d2f489ad95accbb81164,
+      type: 3}
     StartCount: 5
   projectilesInfo: []
   slimesInfo:
@@ -1322,7 +1320,7 @@ PrefabInstance:
     - target: {fileID: 961247457510009722, guid: 7dfc07241afc55d44a1942a52f2b62b3,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20.500366
+      value: 20.500122
       objectReference: {fileID: 0}
     - target: {fileID: 1341399999816680297, guid: 7dfc07241afc55d44a1942a52f2b62b3,
         type: 3}

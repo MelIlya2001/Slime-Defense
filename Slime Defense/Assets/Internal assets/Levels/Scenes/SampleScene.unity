@@ -241,7 +241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8c419365d4ac54cb5d8ec859ce090e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 10
   fly_enemies: 03000000
   walking_enemy_posY: 2.5
   flying_enemy_posY: 11
@@ -357,12 +356,6 @@ Transform:
 --- !u!1 &328366837 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4953753127729525089, guid: 7dfc07241afc55d44a1942a52f2b62b3,
-    type: 3}
-  m_PrefabInstance: {fileID: 1572416734845840264}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &701189769 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6146151308783919109, guid: 7dfc07241afc55d44a1942a52f2b62b3,
     type: 3}
   m_PrefabInstance: {fileID: 1572416734845840264}
   m_PrefabAsset: {fileID: 0}
@@ -589,7 +582,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 9.8, y: 16.1, z: 46.5}
+  m_LocalPosition: {x: -56.8, y: 16.1, z: 46.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -637,7 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shop: {fileID: 1666043549}
-  result_cell: {fileID: 701189769}
+  Bt_result: {fileID: 0}
   posY: 2.5
   castle_position: {x: 67.8, y: 0, z: -3.7}
   Bt_component_first: {fileID: 1395028292}
@@ -655,6 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel_pause: {fileID: 328366837}
+  panel_game_over: {fileID: 0}
 --- !u!1 &1213545681
 GameObject:
   m_ObjectHideFlags: 0
@@ -937,6 +931,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 20
+  animator: {fileID: 0}
+  health_bar: {fileID: 0}
+  is_enemy_castle: 0
 --- !u!1 &1666043549 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7373879114582402661, guid: 7dfc07241afc55d44a1942a52f2b62b3,

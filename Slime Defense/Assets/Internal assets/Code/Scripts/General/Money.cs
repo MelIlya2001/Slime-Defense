@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class Money : MonoBehaviour
 {   
@@ -11,6 +12,7 @@ public class Money : MonoBehaviour
     [SerializeField] private int additional_money;
 
     private TextMeshProUGUI money;
+    public static Action onchanged;
 
     void OnEnable() {
         Abstract_minion.onDied += AddMoney;
@@ -38,13 +40,13 @@ public class Money : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(time_respawn_money);  
-            money.text = (GetCurrentMoney() + additional_money).ToString(); 
+            AddMoney(additional_money);
         }   
     }
 
     private void AddMoney (int new_money){
         money.text = (GetCurrentMoney() + new_money).ToString();
-
+        onchanged?.Invoke();
     }
 
     private void SpendMOney (int mon){

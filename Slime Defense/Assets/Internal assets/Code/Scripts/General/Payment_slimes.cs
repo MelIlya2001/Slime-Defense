@@ -99,6 +99,14 @@ public class Payment_slimes : MonoBehaviour
     private SlimeInfo current_slime;
 
 
+    void OnEnable() {
+        Money.onchanged += CheckMoney;
+    }
+
+    void OnDisable(){
+        Money.onchanged -= CheckMoney;
+    }
+
     public void OnShopClick(){
         shop.SetActive(!shop.activeSelf);
     }

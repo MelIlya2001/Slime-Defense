@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Abstract_minion : MonoBehaviour, I_Abstract_character
 {
     [SerializeField] public PoolControl.EnemyType type;
-    [SerializeField] protected float count_gold;
+    [SerializeField] protected int count_gold;
     [SerializeField] protected float speed;
     [SerializeField] protected Vector3 move_direction = Vector3.right;
     [SerializeField] protected float max_hp;    //понадобится на будущее, когда хилера добавим
@@ -36,6 +37,10 @@ public class Abstract_minion : MonoBehaviour, I_Abstract_character
     protected RaycastHit hit;
     private float taimer_for_attack;
 
+
+    public static Action<int> onDied;
+
+
     protected void Awake(){
         hp = max_hp;
     }
@@ -61,7 +66,10 @@ public class Abstract_minion : MonoBehaviour, I_Abstract_character
     {
         hp -= damage;
         Pool_text_damage.Instance.ShowDamage(damage, transform);
-        if (hp <= 0) PoolControl.Instance.DestroyObject(gameObject);
+        if (hp <= 0) {
+            onDied?.Invoke(count_gold);
+            PoolControl.Instance.DestroyObject(gameObject);
+        }
     }
 
 

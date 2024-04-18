@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -40,7 +41,7 @@ public class Pool_text_damage : MonoBehaviour
             pool.Objects.Dequeue() : Instantiate(text_prefab, parent);
 
         obj.GetComponentInChildren<TextMeshPro>().text = damage.ToString();
-        obj.transform.position = parent.position + new Vector3(0, 3, 0);
+        obj.transform.position = parent.position + new Vector3(0, 5, 0);
         obj.SetActive(true);
     }
 

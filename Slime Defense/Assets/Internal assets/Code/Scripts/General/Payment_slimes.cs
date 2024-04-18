@@ -1,11 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using SlimeType = PoolControl.SlimeType;
+using TMPro;
 
 public class Payment_slimes : MonoBehaviour
 {
+    private Dictionary<SlimeType, int> costs_slimes = new Dictionary<SlimeType, int>{
+        [SlimeType.None] = 0,
+        [SlimeType.air] = 15,
+        [SlimeType.terra] = 10,
+        [SlimeType.water] = 15,
+        [SlimeType.fire] = 20,
+        [SlimeType.fire_air] = 30,
+        [SlimeType.fire_fire] = 30,
+        [SlimeType.fire_terra] = 30,
+        [SlimeType.fire_water] = 25,
+        [SlimeType.air_air] = 25,
+        [SlimeType.air_water] = 30,
+        [SlimeType.air_terra] = 25,
+        [SlimeType.terra_terra] = 25,
+        [SlimeType.terra_water] = 30,
+        [SlimeType.water_water] = 20
+    };
+
 
     [SerializeField] private GameObject shop;
     [SerializeField] private GameObject result_cell;
@@ -22,6 +42,10 @@ public class Payment_slimes : MonoBehaviour
     private SlimeType component_second = SlimeType.None;
 
 
+    public static Action<int> onPayed;
+    private int slime_cost;
+
+
     public void OnShopClick(){
         shop.SetActive(!shop.activeSelf);
     }
@@ -31,8 +55,10 @@ public class Payment_slimes : MonoBehaviour
 
         
         GameObject slime = PoolControl.Instance.GetObject(component_first, PoolControl.Instance.slime_pools);
-        if (slime is not null) slime.transform.position = new Vector3(castle_position.x, posY, castle_position.z);
-        
+        if (slime is null) return;
+        slime.transform.position = new Vector3(castle_position.x, posY, castle_position.z);
+        onPayed?.Invoke(slime_cost);
+       
     }
 
     public void OnFirstComponentClick(){
@@ -46,23 +72,23 @@ public class Payment_slimes : MonoBehaviour
     }
 
     public void OnFireClick(){
-        AddComponent(SlimeType.T1_fire);
+        AddComponent(SlimeType.fire, costs_slimes[SlimeType.fire]);
     }
 
     public void OnWaterClick(){
-        AddComponent(SlimeType.T1_water);
+        AddComponent(SlimeType.water, costs_slimes[SlimeType.water]);
     }
 
 
     public void OnTerraClick(){
-        AddComponent(SlimeType.T1_terra);
+        AddComponent(SlimeType.terra, costs_slimes[SlimeType.terra]);
     }
 
     public void OnAirClick(){
-        AddComponent(SlimeType.T1_air);
+        AddComponent(SlimeType.air, costs_slimes[SlimeType.air]);
     }
 
-    private void AddComponent(SlimeType type = SlimeType.None){
+    private void AddComponent(SlimeType type = SlimeType.None, int cost = 0){
         if (component_first is SlimeType.None){
             component_first = type;
             Bt_component_first.GetComponentInChildren<Text>().text = type.ToString();

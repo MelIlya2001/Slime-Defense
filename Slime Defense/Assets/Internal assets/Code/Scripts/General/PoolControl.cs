@@ -37,20 +37,20 @@ public class PoolControl : MonoBehaviour
 
     public enum SlimeType{
             None,
-            T1_air = 1,
-            T1_terra = 2,
-            T1_fire = 3,
-            T1_water = 4,
-            T2_fire_fire,
-            T2_fire_terra,
-            T2_fire_water,
-            T2_fire_air,
-            T2_air_air,
-            T2_air_terra,
-            T2_air_water,
-            T2_terra_water,
-            T2_terra_terra,
-            T2_water_water            
+            air = 1,
+            terra = 2,
+            fire = 3,
+            water = 4,
+            fire_fire,
+            fire_terra,
+            fire_water,
+            fire_air,
+            air_air,
+            air_terra,
+            air_water,
+            terra_water,
+            terra_terra,
+            water_water            
         }
     
     [Serializable]

@@ -1448,6 +1448,12 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &362237308 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8164289053350188989, guid: 7dfc07241afc55d44a1942a52f2b62b3,
+    type: 3}
+  m_PrefabInstance: {fileID: 644387921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &402356205
 GameObject:
   m_ObjectHideFlags: 0
@@ -2192,6 +2198,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1964829406029895922, guid: 7dfc07241afc55d44a1942a52f2b62b3,
         type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 38
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964829406029895922, guid: 7dfc07241afc55d44a1942a52f2b62b3,
+        type: 3}
       propertyPath: m_FontData.m_LineSpacing
       value: 1
       objectReference: {fileID: 0}
@@ -2249,6 +2260,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnAirClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 4592395507262923543, guid: 7dfc07241afc55d44a1942a52f2b62b3,
+        type: 3}
+      propertyPath: m_Interactable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4592395507262923543, guid: 7dfc07241afc55d44a1942a52f2b62b3,
         type: 3}
@@ -3525,7 +3541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shop: {fileID: 644387926}
-  result_cell: {fileID: 0}
+  Bt_result: {fileID: 362237308}
   posY: 2.5
   castle_position: {x: -60, y: 0, z: 0.16}
   Bt_component_first: {fileID: 644387925}

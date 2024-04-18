@@ -15,11 +15,13 @@ public class Money : MonoBehaviour
     void OnEnable() {
         Abstract_minion.onDied += AddMoney;
         Payment_slimes.onPayed += SpendMOney;
+        Payment_slimes.onHavedMoney += Compare_costs;
     }
 
     void OnDisable(){
         Abstract_minion.onDied -= AddMoney;
         Payment_slimes.onPayed -= SpendMOney;
+        Payment_slimes.onHavedMoney -= Compare_costs;
     }
 
 
@@ -36,18 +38,24 @@ public class Money : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(time_respawn_money);  
-            money.text = (int.Parse(money.text) + additional_money).ToString(); 
+            money.text = (GetCurrentMoney() + additional_money).ToString(); 
         }   
     }
 
     private void AddMoney (int new_money){
-        money.text = (int.Parse(money.text) + new_money).ToString();
+        money.text = (GetCurrentMoney() + new_money).ToString();
 
     }
 
     private void SpendMOney (int mon){
-        money.text = (int.Parse(money.text) - mon).ToString(); 
+        money.text = (GetCurrentMoney() - mon).ToString(); 
     }
 
+    private bool Compare_costs (int cost){
+        return cost > GetCurrentMoney();
+    }
 
+    private int GetCurrentMoney(){
+        return int.Parse(money.text);
+    }
 }

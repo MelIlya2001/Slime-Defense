@@ -16,8 +16,6 @@ public class Pool_text_damage : MonoBehaviour
 
     private void Awake()
     {
-
-        //инициализируем пуллы объектов. Для удобства работы разбиты на 3 пулла по типам объекта: Враги, Слаймы, Снаряды. 
         if (Instance == null)
             Instance = this;
         

@@ -9,6 +9,7 @@ public class Menu_scripts : MonoBehaviour
     public static Menu_scripts Instance; 
     [SerializeField] private GameObject panel_pause;
     [SerializeField] private GameObject panel_game_over;
+    [SerializeField] private GameObject Bt_result;
 
     public void Awake(){
         Time.timeScale = 1;
@@ -25,6 +26,14 @@ public class Menu_scripts : MonoBehaviour
         SceneManager.LoadScene("Main_menu");
     }
 
+
+    public void NextLevel(){
+        string name_current_level = SceneManager.GetActiveScene().name;
+
+        PlayerPrefs.SetString("loading_scene", name_current_level); //пока что так
+        SceneManager.LoadScene("Loader_Scene");
+    }
+
     public void RestartLevel(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -35,6 +44,9 @@ public class Menu_scripts : MonoBehaviour
         {
             panel_game_over.GetComponent<Image>().color = Color.red;
             panel_game_over.GetComponentsInChildren<Text>()[0].text = "You Lose";
+            Bt_result.GetComponent<Button>().onClick.RemoveAllListeners();
+            Bt_result.GetComponent<Button>().onClick.AddListener(RestartLevel);
+            Bt_result.GetComponentInChildren<Text>().text = "Restart";
         }
 
         panel_game_over.SetActive(true);

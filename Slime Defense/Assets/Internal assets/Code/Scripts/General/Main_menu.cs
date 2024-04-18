@@ -10,5 +10,9 @@ public class Main_menu : MonoBehaviour
         SceneManager.LoadScene("Loader_Scene");
     }
 
-    
+    public void ExitFromGame(){
+        //сохранить прогресс и выйти из игры
+        Application.Quit();
+    }
+
 }

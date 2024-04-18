@@ -2768,7 +2768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  count_gold: 1
+  count_gold: 20
   speed: 10
   move_direction: {x: -1, y: 0, z: 0}
   max_hp: 10

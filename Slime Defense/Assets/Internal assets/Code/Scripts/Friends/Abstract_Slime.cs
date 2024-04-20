@@ -40,6 +40,7 @@ public abstract class Abstract_Slime : MonoBehaviour, I_Abstract_character
         
         if (Physics.Raycast(transform.position, move_direction, out hit, distance_attack, layerMask)){
             if (taimer_for_attack <= 0){
+                animator.Play("slime_hit");
                 AutoAttack(hit);
                 taimer_for_attack = delay_attack;
             } else {

@@ -11,10 +11,16 @@ public class Menu_scripts : MonoBehaviour
     [SerializeField] private GameObject panel_game_over;
     [SerializeField] private GameObject Bt_result;
 
+    private string current_level;
+    private int current_level_index ;
+
     public void Awake(){
         Time.timeScale = 1;
         if (Instance == null)
             Instance = this;
+        
+        current_level = SceneManager.GetActiveScene().name;
+        current_level_index = int.Parse(current_level.Split('_')[1]);
     }
 
     public void OnPauseClick(){
@@ -28,9 +34,9 @@ public class Menu_scripts : MonoBehaviour
 
 
     public void NextLevel(){
-        string name_current_level = SceneManager.GetActiveScene().name;
+        string name_next_level = "Level_" + (current_level_index + 1).ToString();
 
-        PlayerPrefs.SetString("loading_scene", name_current_level); //пока что так
+        PlayerPrefs.SetString("loading_scene", name_next_level); 
         SceneManager.LoadScene("Loader_Scene");
     }
 
@@ -50,5 +56,9 @@ public class Menu_scripts : MonoBehaviour
         }
 
         panel_game_over.SetActive(true);
+
+        if (current_level_index >= PlayerPrefs.GetInt("Available level", 1)){
+            PlayerPrefs.SetInt("Available level", current_level_index + 1);
+        }
     }
 }

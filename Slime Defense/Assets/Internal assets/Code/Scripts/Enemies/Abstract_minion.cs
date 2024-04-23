@@ -51,6 +51,7 @@ public class Abstract_minion : MonoBehaviour, I_Abstract_character
         if (Physics.Raycast(transform.position + new Vector3(0, 2.5f, 0), move_direction, out hit, distance_attack, layerMask))             //вектор используется временно как костыль, так как из-за кривого пивота слайма приходится балансировать
         {
             if (taimer_for_attack <= 0){
+                animator.SetBool("isWalked", false);
                 animator.Play("skelet_attack");                                                 //в анимации заложен вызов функции AnimAttack()
                 taimer_for_attack = speed_attack;
             } else {
@@ -58,6 +59,7 @@ public class Abstract_minion : MonoBehaviour, I_Abstract_character
             }
         } else {
             rb.AddForce(move_direction * speed, ForceMode.VelocityChange);
+            animator.Play("metarig_001|sword_walk");
         }
 
     }

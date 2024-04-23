@@ -121,10 +121,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   hp: 3
-  speed: 20
+  speed: 10
   move_direction: {x: 1, y: 0, z: 0}
   distance_attack: 20
-  delay_attack: 4
+  delay_attack: 3
   point_damage: 1
   animator: {fileID: 6686040303663136694}
   rb: {fileID: 394380959649296855}

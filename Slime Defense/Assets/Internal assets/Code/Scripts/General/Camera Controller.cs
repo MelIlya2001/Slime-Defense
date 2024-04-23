@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
@@ -33,12 +34,6 @@ public class CameraController : MonoBehaviour
    
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -63,12 +58,10 @@ public class CameraController : MonoBehaviour
 
             if (difference.x + cam.transform.position.x <= start_level.x || difference.x + cam.transform.position.x >= end_level.x) return;
 
-            cam.transform.position += new Vector3(difference.x, 0, 0);
+            cam.transform.position += new Vector3(difference.x, 0, 0) * PlayerPrefs.GetFloat("Speed of scrolling", 1f);
 
         }
     }
 
     
-
-
 }

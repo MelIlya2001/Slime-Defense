@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class Abstract_Slime : MonoBehaviour, I_Abstract_character
+public abstract class Abstract_Slime : Music, I_Abstract_character
 {
     [Header ("Specifications")]
     [SerializeField] public PoolControl.SlimeType type;
@@ -48,6 +48,8 @@ public abstract class Abstract_Slime : MonoBehaviour, I_Abstract_character
             }
         } else {
             rb.AddForce(move_direction * speed, ForceMode.VelocityChange);
+
+            
         }
 
     }
@@ -60,6 +62,7 @@ public abstract class Abstract_Slime : MonoBehaviour, I_Abstract_character
 
     public  void TakeDamage(float damage){
         this.hp -= damage;
+        PlaySound(sounds[1], destroyed: true);
         Pool_text_damage.Instance.ShowDamage(damage, transform);
         if (this.hp <= 0) Deth_Skill();
     }
@@ -68,5 +71,9 @@ public abstract class Abstract_Slime : MonoBehaviour, I_Abstract_character
     {
         //описание посмертного умения слайма
         PoolControl.Instance.DestroyObject(gameObject);
+    }
+
+    public void MoveSound(){
+       // PlaySound(sounds[0], volume: 0.06f , p1: 0.7f, p2: 1.4f);
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Main_menu : MonoBehaviour
+public class Main_menu : Music
 {
     [SerializeField] private uint count_levels;
     [SerializeField] private GameObject prefab_Bt_level;
@@ -31,12 +31,14 @@ public class Main_menu : MonoBehaviour
     }
 
     public void OnLevelClick(string scene_name){
-        Debug.Log(""+scene_name);
+        PlaySound(sounds[0], destroyed:true);
+        
         PlayerPrefs.SetString("loading_scene", scene_name);
         SceneManager.LoadScene("Loader_Scene");
     }
 
     public void ExitFromGame(){
+        PlaySound(sounds[0], destroyed:true);
         //сохранить прогресс и выйти из игры
         Application.Quit();
     }

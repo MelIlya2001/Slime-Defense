@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : Music
 {
     public static SceneLoader Instance { get; private set; }
 
@@ -54,7 +54,10 @@ public class SceneLoader : MonoBehaviour
     void Update(){
         if (press_key_hit.activeSelf)
         {
-            if (Input.anyKeyDown) async_operation.allowSceneActivation = true;
+            if (Input.anyKeyDown) {
+                PlaySound(sounds[0]);
+                async_operation.allowSceneActivation = true;
+            }
         }
     }
 

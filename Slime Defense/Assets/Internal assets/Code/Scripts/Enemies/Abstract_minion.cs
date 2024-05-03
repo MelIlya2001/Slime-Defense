@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Abstract_minion : MonoBehaviour, I_Abstract_character
+public class Abstract_minion : Music, I_Abstract_character
 {
     [SerializeField] public PoolControl.EnemyType type;
     [SerializeField] protected int count_gold;
@@ -67,8 +67,10 @@ public class Abstract_minion : MonoBehaviour, I_Abstract_character
     public  void TakeDamage(float damage, string[] elements)
     {
         hp -= damage;
+        PlaySound(sounds[1]);
         Pool_text_damage.Instance.ShowDamage(damage, transform);
         if (hp <= 0) {
+            PlaySound(sounds[0], volume: 1f , destroyed: true);
             onDied?.Invoke(count_gold);
             PoolControl.Instance.DestroyObject(gameObject);
         }

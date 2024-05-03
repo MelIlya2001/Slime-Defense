@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using SlimeType = PoolControl.SlimeType;
 using TMPro;
 
-public class Payment_slimes : MonoBehaviour
+public class Payment_slimes : Music
 {
 
     #region combinations of slimes
@@ -109,6 +109,7 @@ public class Payment_slimes : MonoBehaviour
 
     public void OnShopClick(){
         shop.SetActive(!shop.activeSelf);
+        PlaySound(sounds[0], volume: 0.3f);
     }
 
     public void ConfirmPayment(){
@@ -119,6 +120,7 @@ public class Payment_slimes : MonoBehaviour
         if (slime is null) return;
         slime.transform.position = new Vector3(castle_position.x, posY, castle_position.z);
         onPayed?.Invoke(current_slime.GetCost());
+        PlaySound(sounds[0], volume: 0.3f);
         CheckMoney();
     }
 
@@ -169,13 +171,14 @@ public class Payment_slimes : MonoBehaviour
 
 
     public void UpdateResult(){
+        PlaySound(sounds[0], volume: 0.3f);
         if (component_first is SlimeType.None && component_second is SlimeType.None){
             Bt_result.GetComponentInChildren<Text>().text = "";
             Bt_result.GetComponentInChildren<TextMeshProUGUI>().text = "";
             Bt_result.GetComponent<Button>().interactable = true;
             return;
         }
-
+        
 
         current_slime = slimeInfo.Find(item => new HashSet<SlimeType>(item.GetComponents()).SetEquals(new List<SlimeType>(){component_first, component_second}));
         Bt_result.GetComponentInChildren<Text>().text = current_slime.GetSlimeType().ToString();

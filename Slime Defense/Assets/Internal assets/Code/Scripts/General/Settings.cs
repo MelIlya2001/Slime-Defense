@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Settings : MonoBehaviour
+public class Settings : Music
 {
     [SerializeField] private GameObject speed_container;
     [SerializeField] private GameObject speed_slider;
+
+
 
 
     public void Awake(){
@@ -15,6 +18,7 @@ public class Settings : MonoBehaviour
     }
 
     public void OnSaveSettings(){
+        PlaySound(sounds[0]);
         PlayerPrefs.SetFloat("Speed of scrolling", speed_slider.GetComponent<Slider>().value);
     }
 

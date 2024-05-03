@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Сastle : MonoBehaviour, I_Abstract_character
+public class Сastle : Music, I_Abstract_character
 {
     [Header ("Specifications")]
     [SerializeField] private float hp;
@@ -20,6 +20,7 @@ public class Сastle : MonoBehaviour, I_Abstract_character
 
     public void TakeDamage(float damage){
         hp -= damage;
+        PlaySound(sounds[0], destroyed: true);
         if (hp <= 0){
             Deth_Skill();
         } else {

@@ -12,17 +12,17 @@ EditorBuildSettings:
     path: Assets/Internal assets/Levels/Scenes/Loader_Scene.unity
     guid: e4890489ff7546a4ba262ee51c267114
   - enabled: 1
-    path: Assets/Internal assets/Levels/Scenes/SampleScene.unity
-    guid: c850ee8c3b14cc8459e7e186857cf567
-  - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Beutifull_Map.unity
     guid: 2673249fff09f76448dada26f14624d1
   - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Level_1.unity
-    guid: 5fac92340cf53f441b6b11c72fad834d
+    guid: f2c0d586e64934443b5a35a6c50c3872
   - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Level_2.unity
-    guid: 5537c92e16e30c34ea544808c6067c23
+    guid: c302ab2f7fb2bc44bb0c5223594a3800
+  - enabled: 1
+    path: Assets/Internal assets/Levels/Scenes/Level_3.unity
+    guid: 0d743c37fe9dd6643b83c914b25e2a89
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
       guid: e42da33d5cecd274ea2d547235229226, type: 2}

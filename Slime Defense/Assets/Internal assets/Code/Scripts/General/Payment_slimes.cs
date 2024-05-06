@@ -9,6 +9,8 @@ using TMPro;
 public class Payment_slimes : Music
 {
 
+    
+
     #region combinations of slimes
     class SlimeInfo{
         private SlimeType type;
@@ -84,7 +86,6 @@ public class Payment_slimes : Music
     [Space]
 
     [SerializeField] private float posY;
-    [SerializeField] private Vector3 castle_position;
 
     [Space]
 
@@ -118,7 +119,11 @@ public class Payment_slimes : Music
 
         GameObject slime = PoolControl.Instance.GetObject(current_slime.GetSlimeType(), PoolControl.Instance.slime_pools);
         if (slime is null) return;
-        slime.transform.position = new Vector3(castle_position.x, posY, castle_position.z);
+        
+        float posZ = Utilities.Instance.GetRandomPosZ();
+        
+        slime.transform.position = new Vector3(Utilities.Instance.GetSlimeSpawnX(), posY, posZ);
+
         onPayed?.Invoke(current_slime.GetCost());
         PlaySound(sounds[0], volume: 0.3f);
         CheckMoney();

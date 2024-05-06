@@ -19,45 +19,54 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
     [SerializeField] protected float point_damage;
 
     [Header ("Components")]
-    [SerializeField] protected Animator animator;
-    [SerializeField] protected Rigidbody rb;
+    protected Animator animator;
     [SerializeField] protected LayerMask layerMask;
     // Start is called before the first frame update
 
 
     protected string[] elements;
-    protected RaycastHit hit;
+    protected Collider target;
     protected float taimer_for_attack;
     
     void Awake()
     {
-
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     protected virtual void FixedUpdate()
     {
+
         
-        if (Physics.Raycast(transform.position, move_direction, out hit, distance_attack, layerMask)){
-            if (taimer_for_attack <= 0){
-                animator.Play("slime_hit");
-                AutoAttack(hit);
+        var colliders = Physics.OverlapBox(transform.position, new Vector3(distance_attack, 4f, Utilities.Instance.GetHalfZ()), new Quaternion(0, 0, 0, 0), layerMask: layerMask); 
+        if (colliders.Length > 0){
+
+            float minX = colliders.Min(collider => collider.transform.position.x);
+            target = colliders.First(x => x.transform.position.x == minX);
+
+
+            if (taimer_for_attack <= 0 && (target is not null)){
+                animator.SetBool("isWalked", false);
+                animator.SetTrigger("attack");  // //в анимации заложен вызов функции AnimAttack()
                 taimer_for_attack = delay_attack;
             } else {
                 taimer_for_attack -= Time.fixedDeltaTime;
             }
         } else {
-            rb.AddForce(move_direction * speed, ForceMode.VelocityChange);
-
-            
+            transform.Translate(move_direction * speed * Time.fixedDeltaTime);
+            animator.SetBool("isWalked", true);
         }
+        
 
     }
 
+    protected virtual void AnimAttack(){
+        this.AutoAttack(target);
+    }
 
-    protected void AutoAttack(RaycastHit hit)
+    protected void AutoAttack(Collider target)
     {
-        hit.collider.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage, elements);
+        target.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage, elements);
     }
 
     public  void TakeDamage(float damage){
@@ -73,7 +82,8 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
         PoolControl.Instance.DestroyObject(gameObject);
     }
 
-    public void MoveSound(){
-       // PlaySound(sounds[0], volume: 0.06f , p1: 0.7f, p2: 1.4f);
+
+    private void MoveSound(){
+
     }
 }

@@ -7,7 +7,7 @@ public class Air_slime_rdd : Abstract_Slime
 {
    
 
-    protected override void FixedUpdate()
+    /*protected override void FixedUpdate()
     {
         Vector3 fly_detecting = transform.position + new Vector3(0, 8.5f, 0);
 
@@ -22,5 +22,5 @@ public class Air_slime_rdd : Abstract_Slime
             rb.AddForce(move_direction * speed, ForceMode.VelocityChange);
         }
 
-    }
+    }*/
 }

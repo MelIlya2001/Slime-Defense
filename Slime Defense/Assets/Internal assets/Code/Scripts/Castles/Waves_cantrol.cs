@@ -53,8 +53,10 @@ public class Waves_control : MonoBehaviour
                 GameObject enemy = PoolControl.Instance.GetObject(waves[current_wave].enemyInfos[0].enemyType, PoolControl.Instance.enemy_pools);
 
                 //start_position
-                var enemy_posY = fly_enemies.Contains(waves[current_wave].enemyInfos[0].enemyType) ? flying_enemy_posY : walking_enemy_posY;
-                enemy.transform.position = new Vector3(transform.position.x, enemy_posY, transform.position.z);
+                float enemy_posY = fly_enemies.Contains(waves[current_wave].enemyInfos[0].enemyType) ? flying_enemy_posY : walking_enemy_posY;
+                float posZ = Utilities.Instance.GetRandomPosZ();
+        
+                enemy.transform.position = new Vector3(Utilities.Instance.GetEnemySpawnX(), enemy_posY, posZ);
                 
                 waves[current_wave].enemyInfos.RemoveAt(0);
                 timer_summon = waves[current_wave].enemyInfos.Count > 0 ? waves[current_wave].enemyInfos[0].delay_seconds_to_summon : 0;

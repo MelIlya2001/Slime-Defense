@@ -20,7 +20,7 @@ public class Menu_scripts : Music
             Instance = this;
         
         current_level = SceneManager.GetActiveScene().name;
-        current_level_index = int.Parse(current_level.Split('_')[1]);
+        //current_level_index = int.Parse(current_level.Split('_')[1]);             вернуть потом на место
     }
 
     public void OnPauseClick(){

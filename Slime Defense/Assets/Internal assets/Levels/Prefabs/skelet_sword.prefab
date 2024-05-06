@@ -2658,7 +2658,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7145242808863666311}
   - component: {fileID: 2588654529737414072}
-  - component: {fileID: 2109334431610662415}
   - component: {fileID: 8931981948161260036}
   - component: {fileID: 3157000551641067302}
   - component: {fileID: -1643104377533168630}
@@ -2708,33 +2707,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &2109334431610662415
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7521803948870330941}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 124
-  m_CollisionDetection: 0
 --- !u!65 &8931981948161260036
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2771,22 +2743,21 @@ MonoBehaviour:
   sounds:
   - {fileID: 8300000, guid: c1ec6f4fefeef824eb2eda73b8cdabd6, type: 3}
   - {fileID: 8300000, guid: 10a1b095ce9119f4d831f679863b292a, type: 3}
+  mixer: {fileID: 0}
   type: 0
   count_gold: 20
   speed: 10
-  move_direction: {x: -1, y: 0, z: 0}
+  move_direction: {x: 0, y: 0, z: 1}
   max_hp: 5
-  point_damage: 2
-  speed_attack: 5
-  distance_attack: 5
+  point_damage: 0.1
+  delay_attack: 3
+  distance_attack: 2
   splash_damage: 0
   r_fire: 0
   r_water: 0
   r_terra: 0
   r_air: 0
   r_status: 0
-  animator: {fileID: 2588654529737414072}
-  rb: {fileID: 2109334431610662415}
   layerMask:
     serializedVersion: 2
     m_Bits: 128

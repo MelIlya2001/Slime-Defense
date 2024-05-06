@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class Abstract_minion : Music, I_Abstract_character
 {
@@ -15,7 +16,7 @@ public class Abstract_minion : Music, I_Abstract_character
 
     [Header ("Attack")]
     [SerializeField] protected float point_damage;
-    [SerializeField] protected float speed_attack;
+    [SerializeField] protected float delay_attack;
     [SerializeField] protected float distance_attack;
     [SerializeField] protected float splash_damage;
     [Space]
@@ -29,13 +30,14 @@ public class Abstract_minion : Music, I_Abstract_character
     [SerializeField] protected float r_status;
 
     [Header ("Components")]
-    [SerializeField]  Animator animator;
-    [SerializeField]  Rigidbody rb;
+    protected  Animator animator;
     [SerializeField]  LayerMask layerMask;
 
 
-    protected RaycastHit hit;
+    protected Collider target;
+    
     private float taimer_for_attack;
+
 
 
     public static Action<int> onDied;
@@ -43,24 +45,32 @@ public class Abstract_minion : Music, I_Abstract_character
 
     protected void Awake(){
         hp = max_hp;
+        animator = GetComponent<Animator>();
     }
 
     protected virtual void FixedUpdate()
     {
+      
         
-        if (Physics.Raycast(transform.position + new Vector3(0, 2.5f, 0), move_direction, out hit, distance_attack, layerMask))             //вектор используется временно как костыль, так как из-за кривого пивота слайма приходится балансировать
-        {
-            if (taimer_for_attack <= 0){
+        var colliders = Physics.OverlapBox(transform.position, new Vector3(distance_attack, 4f, Utilities.Instance.GetHalfZ()), new Quaternion(0, 0, 0, 0), layerMask: layerMask); 
+        if (colliders.Length > 0){
+
+
+            float minX = colliders.Min(collider => collider.transform.position.x);
+            target = colliders.First(x => x.transform.position.x == minX);
+
+            if (taimer_for_attack <= 0 && (target is not null)){
                 animator.SetBool("isWalked", false);
-                animator.Play("skelet_attack");                                                 //в анимации заложен вызов функции AnimAttack()
-                taimer_for_attack = speed_attack;
+                animator.SetTrigger("attack");                                                 //в анимации заложен вызов функции AnimAttack()
+                taimer_for_attack = delay_attack;
             } else {
                 taimer_for_attack -= Time.fixedDeltaTime;
             }
         } else {
-            rb.AddForce(move_direction * speed, ForceMode.VelocityChange);
-            animator.Play("metarig_001|sword_walk");
+            transform.Translate(move_direction * speed * Time.fixedDeltaTime);
+            animator.SetBool("isWalked", true);
         }
+        
 
     }
 
@@ -77,12 +87,13 @@ public class Abstract_minion : Music, I_Abstract_character
     }
 
 
-    protected void AutoAttack(RaycastHit hit)
+    protected void AutoAttack(Collider target)
     {
-        hit.collider.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage);
+        target.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage);
     }
 
     protected void AnimAttack(){
-        this.AutoAttack(hit);
+        this.AutoAttack(target);
     }
+
 }

@@ -121,15 +121,18 @@ public class PoolControl : MonoBehaviour
         switch(type.GetType().ToString()){         
             case "PoolControl+SlimeType":
                 in_obj = Instantiate(slimesInfo.Find(x => x.Type.Equals(type)).Prefab, parent);
+                in_obj.transform.position = new Vector3(0,0,50);        //костыль, чтобы при одновременном суммоне врагов и слаймов не домажились 
                 break;
 
             case "PoolControl+ProjectileType":
                 in_obj = Instantiate(projectilesInfo.Find(x => x.Type.Equals(type)).Prefab, parent);
+                in_obj.transform.position = new Vector3(0,0,-50);   //костыль,
                 break;
 
             case "PoolControl+EnemyType":
             default:
                 in_obj = Instantiate(enemiesInfo.Find(x => x.Type.Equals(type)).Prefab, parent);
+                in_obj.transform.position = new Vector3(0,50,50); 
                 break;
         }
         in_obj.SetActive(false);

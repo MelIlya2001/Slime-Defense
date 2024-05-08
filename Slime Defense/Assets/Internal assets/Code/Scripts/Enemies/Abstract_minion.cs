@@ -74,7 +74,7 @@ public class Abstract_minion : Music, I_Abstract_character
 
     }
 
-    public  void TakeDamage(float damage, string[] elements)
+    public void TakeDamage(float damage, Utilities.Elements[] elements = null)
     {
         hp -= damage;
         PlaySound(sounds[1]);

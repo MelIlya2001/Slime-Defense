@@ -24,7 +24,7 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
     // Start is called before the first frame update
 
 
-    protected string[] elements;
+    protected Utilities.Elements[] elements;
     protected Collider target;
     protected float taimer_for_attack;
     
@@ -69,14 +69,14 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
         target.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage, elements);
     }
 
-    public  void TakeDamage(float damage){
+    public  void TakeDamage(float damage,  Utilities.Elements[] elements = null){
         this.hp -= damage;
         PlaySound(sounds[1], destroyed: true);
         Pool_text_damage.Instance.ShowDamage(damage, transform);
         if (this.hp <= 0) Deth_Skill();
     }
 
-    private void Deth_Skill()
+    protected virtual void Deth_Skill()
     {
         //описание посмертного умения слайма
         PoolControl.Instance.DestroyObject(gameObject);

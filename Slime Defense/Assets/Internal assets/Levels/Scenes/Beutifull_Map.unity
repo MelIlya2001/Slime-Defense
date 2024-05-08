@@ -2301,7 +2301,7 @@ MonoBehaviour:
   - Type: 6
     Prefab: {fileID: 8837542704900256661, guid: 01b26dadbae89c44198c63a736439dfc,
       type: 3}
-    StartCount: 6
+    StartCount: 1
   - Type: 13
     Prefab: {fileID: 1419673705581635144, guid: 93373487568eb52458e748cd34c74fb6,
       type: 3}

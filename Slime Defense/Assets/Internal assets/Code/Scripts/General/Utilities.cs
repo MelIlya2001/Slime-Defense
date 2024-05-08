@@ -9,6 +9,15 @@ public class Utilities : MonoBehaviour
     [SerializeField] private GameObject limitLeftSpawnPos;
     [SerializeField] private GameObject limitRightSpawnPos;
 
+
+     public enum Elements{
+            Fire,
+            Water,
+            Air,
+            Terra
+        }
+
+
     private void Awake()
     {
         if (Instance == null)

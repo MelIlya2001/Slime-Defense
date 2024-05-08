@@ -18,7 +18,7 @@ public class Сastle : Music, I_Abstract_character
     }
 
 
-    public void TakeDamage(float damage){
+    public void TakeDamage(float damage,  Utilities.Elements[] elements = null){
         hp -= damage;
         PlaySound(sounds[0], destroyed: true);
         if (hp <= 0){
@@ -28,10 +28,6 @@ public class Сastle : Music, I_Abstract_character
         }
     }
 
-
-    public void TakeDamage(float damage, string[] elements){
-        TakeDamage(damage);
-    }
 
     private void Deth_Skill()
     {

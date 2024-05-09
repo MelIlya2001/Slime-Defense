@@ -21,7 +21,7 @@ public class Wall : MonoBehaviour, I_Abstract_character
         current_hp = hp;
         timer = lifetime;
         transform.parent = null;
-        transform.position = new Vector3(parent.position.x, 3f, parent.position.z);
+        transform.position = new Vector3(parent.position.x, -3f, parent.position.z);
     }
 
 

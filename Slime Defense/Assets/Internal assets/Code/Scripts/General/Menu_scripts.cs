@@ -9,6 +9,7 @@ public class Menu_scripts : Music
     public static Menu_scripts Instance; 
     [SerializeField] private GameObject panel_pause;
     [SerializeField] private GameObject panel_game_over;
+    [SerializeField] private GameObject panel_game_over_lose;
     [SerializeField] private GameObject Bt_result;
 
     private string current_level;
@@ -30,10 +31,10 @@ public class Menu_scripts : Music
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
 
         if (Time.timeScale == 1){
-            mixer.SetFloat("General_volume", 0f);
+            mixer.SetFloat("General_volume", PlayerPrefs.GetFloat("Volume of music", 0f));
         } else
         {
-            mixer.SetFloat("General_volume", -10f);
+            mixer.SetFloat("General_volume", PlayerPrefs.GetFloat("Volume of music", 0f) - 10f);
         }
 
         panel_pause.SetActive(!panel_pause.activeSelf);
@@ -41,14 +42,14 @@ public class Menu_scripts : Music
 
     public void ExitToMainMenu(){
         PlaySound(sounds[2], destroyed: true);
-        mixer.SetFloat("General_volume", 0f);
+        mixer.SetFloat("General_volume", PlayerPrefs.GetFloat("Volume of music", 0f));
         SceneManager.LoadScene("Main_menu");
     }
 
 
     public void NextLevel(){
         PlaySound(sounds[2]);
-        mixer.SetFloat("General_volume", 0f);
+        mixer.SetFloat("General_volume", PlayerPrefs.GetFloat("Volume of music", 0f));
 
 
         string name_next_level = "Level_" + (current_level_index + 1).ToString();
@@ -64,28 +65,27 @@ public class Menu_scripts : Music
     }
 
     public void GameOver(bool isWinner = false){
-        mixer.SetFloat("General_volume", -10f);
+        mixer.SetFloat("General_volume", PlayerPrefs.GetFloat("Volume of music", 0f) -10f);
 
         Time.timeScale = 0;
-        if (!isWinner)  //если мы не победили, нам понадобится изменить панель game_over, которая по умолчанию настроенна на победу
+        if (!isWinner)
         {
-            panel_game_over.GetComponent<Image>().color = Color.red;
+            /*panel_game_over.GetComponent<Image>().color = Color.red;
             panel_game_over.GetComponentsInChildren<Text>()[0].text = "You Lose";
             Bt_result.GetComponent<Button>().onClick.RemoveAllListeners();
             Bt_result.GetComponent<Button>().onClick.AddListener(RestartLevel);
-            Bt_result.GetComponentInChildren<Text>().text = "Restart";
+            Bt_result.GetComponentInChildren<Text>().text = "Restart";*/
+            panel_game_over_lose.SetActive(true);
 
             PlaySound(sounds[0]);
         } else {
+            panel_game_over.SetActive(true);
             PlaySound(sounds[1]);
-        }
 
-        
-
-        panel_game_over.SetActive(true);
-        
-        if (current_level_index >= PlayerPrefs.GetInt("Available level", 1)){
+            if (current_level_index >= PlayerPrefs.GetInt("Available level", 1)){
             PlayerPrefs.SetInt("Available level", current_level_index + 1);
         }
+        }
+
     }
 }

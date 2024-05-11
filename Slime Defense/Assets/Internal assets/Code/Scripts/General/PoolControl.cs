@@ -35,6 +35,7 @@ public class PoolControl : MonoBehaviour
             arrow
         }
 
+    [Serializable]
     public enum SlimeType{
             None,
             T1_air = 1,

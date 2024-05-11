@@ -12,9 +12,10 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
     [SerializeField] protected float hp;
     [SerializeField] protected float speed;
     [SerializeField] protected Vector3 move_direction = Vector3.left;
+    [SerializeField] protected float ditectY;
     [Space]
     [Header ("Attack")]
-    [SerializeField] protected float distance_attack = 20f;
+    [SerializeField] protected float distance_attack;
     [SerializeField] protected float delay_attack;
     [SerializeField] protected float point_damage;
 
@@ -27,10 +28,16 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
     protected Utilities.Elements[] elements;
     protected Collider target;
     protected float taimer_for_attack;
+    private float current_hp;
     
     void Awake()
     {
+        current_hp = hp;
         animator = GetComponent<Animator>();
+    }
+
+    void OnDisable(){
+        current_hp = hp;
     }
 
     // Update is called once per frame
@@ -38,7 +45,7 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
     {
 
         
-        var colliders = Physics.OverlapBox(transform.position, new Vector3(distance_attack, 4f, Utilities.Instance.GetHalfZ()), new Quaternion(0, 0, 0, 0), layerMask: layerMask); 
+        var colliders = Physics.OverlapBox(new Vector3(transform.position.x + distance_attack / 2, transform.position.y, transform.position.z), new Vector3(distance_attack / 2, ditectY, Utilities.Instance.GetHalfZ()), new Quaternion(0, 0, 0, 0), layerMask: layerMask); 
         if (colliders.Length > 0){
 
             float minX = colliders.Min(collider => collider.transform.position.x);
@@ -64,16 +71,16 @@ public abstract class Abstract_Slime : Music, I_Abstract_character
         this.AutoAttack(target);
     }
 
-    protected void AutoAttack(Collider target)
+    protected virtual void AutoAttack(Collider target)
     {
         target.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage, elements);
     }
 
     public  void TakeDamage(float damage,  Utilities.Elements[] elements = null){
-        this.hp -= damage;
+        current_hp -= damage;
         PlaySound(sounds[1], destroyed: true);
         Pool_text_damage.Instance.ShowDamage(damage, transform);
-        if (this.hp <= 0) Deth_Skill();
+        if (current_hp <= 0) Deth_Skill();
     }
 
     protected virtual void Deth_Skill()

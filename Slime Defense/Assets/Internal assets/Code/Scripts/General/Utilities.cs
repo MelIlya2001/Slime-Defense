@@ -8,6 +8,8 @@ public class Utilities : MonoBehaviour
     public static Utilities Instance;
     [SerializeField] private GameObject limitLeftSpawnPos;
     [SerializeField] private GameObject limitRightSpawnPos;
+    [SerializeField] private GameObject Start_level;
+    [SerializeField] private GameObject End_level;
 
 
      public enum Elements{
@@ -29,16 +31,18 @@ public class Utilities : MonoBehaviour
     }
 
     public float GetSlimeSpawnX() {
-        Debug.Log(limitLeftSpawnPos.transform.position.x);
         return limitLeftSpawnPos.transform.position.x;
     }
 
     public float GetEnemySpawnX() {
-        Debug.Log(limitRightSpawnPos.transform.position.x);
         return limitRightSpawnPos.transform.position.x;
     }
 
     public float GetHalfZ(){
         return Math.Abs(limitLeftSpawnPos.transform.position.z - limitRightSpawnPos.transform.position.z);
+    }
+
+    public Vector3 GetEndLevel(){
+        return End_level.transform.position;
     }
 }

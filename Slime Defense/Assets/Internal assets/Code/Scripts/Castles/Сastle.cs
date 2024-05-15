@@ -12,6 +12,19 @@ public class Сastle : Music, I_Abstract_character
     [SerializeField] private Slider health_bar;
     [SerializeField] private bool is_enemy_castle;
 
+
+    void OnEnable() {
+        //Menu_scripts.onEndGameHpCastleResult += CompareHP;
+
+        if (!is_enemy_castle)
+            Menu_scripts.onEndGameHpCastleResult += CompareHP;
+    }
+
+    void OnDisable(){
+        if (!is_enemy_castle)
+            Menu_scripts.onEndGameHpCastleResult -= CompareHP;
+    }
+
     void Awake(){
         health_bar.maxValue = hp;
         health_bar.value = hp;
@@ -28,6 +41,10 @@ public class Сastle : Music, I_Abstract_character
         }
     }
 
+
+    public bool CompareHP(){
+        return hp >= Utilities.Instance.GetRemainigHpForStar();
+    }
 
     private void Deth_Skill()
     {

@@ -280,7 +280,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6ccdb7e5a0615ab46ab2cc4185c5eba0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2749,7 +2749,7 @@ MonoBehaviour:
   speed: 10
   move_direction: {x: 0, y: 0, z: 1}
   max_hp: 5
-  point_damage: 0.1
+  point_damage: 1
   delay_attack: 3
   distance_attack: 2
   splash_damage: 0

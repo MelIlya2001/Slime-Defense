@@ -59,8 +59,10 @@ public class Abstract_minion : Music, I_Abstract_character
             float minX = colliders.Min(collider => collider.transform.position.x);
             target = colliders.First(x => x.transform.position.x == minX);
 
+            animator.SetBool("isWalked", false);
+            
             if (taimer_for_attack <= 0 && (target is not null)){
-                animator.SetBool("isWalked", false);
+                
                 animator.SetTrigger("attack");                                                 //в анимации заложен вызов функции AnimAttack()
                 taimer_for_attack = delay_attack;
             } else {

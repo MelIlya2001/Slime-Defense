@@ -308,13 +308,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 76847c8b6c777894183ef2a7faeeb118, type: 3}
   mixer: {fileID: 24100000, guid: 206937700aa23924c83d43cd641ed3f2, type: 2}
   type: 5
-  hp: 20
+  hp: 4
   speed: 5
   move_direction: {x: 0, y: 0, z: 1}
   ditectY: 4
   distance_attack: 10
   delay_attack: 5
-  point_damage: 1
+  point_damage: 2
   layerMask:
     serializedVersion: 2
     m_Bits: 64

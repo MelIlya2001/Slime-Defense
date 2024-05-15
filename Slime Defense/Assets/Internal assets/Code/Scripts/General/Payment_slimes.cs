@@ -107,7 +107,7 @@ public class Payment_slimes : Music
     [SerializeField] private GameObject Bt_shop;
     ///
 
-
+    private int count_payed_slimes;
 
 
 
@@ -119,10 +119,12 @@ public class Payment_slimes : Music
 
     void OnEnable() {
         Money.onchanged += CheckMoney;
+        Menu_scripts.onEndGameSlimesResult += CompareCountPayedSlimes;
     }
 
     void OnDisable(){
         Money.onchanged -= CheckMoney;
+        Menu_scripts.onEndGameSlimesResult -= CompareCountPayedSlimes;
     }
 
     public void OnShopClick(){
@@ -145,6 +147,7 @@ public class Payment_slimes : Music
 
         onPayed?.Invoke(current_slime.GetCost());
         PlaySound(sounds[0], volume: 0.3f);
+        count_payed_slimes++;
         CheckMoney();
     }
 
@@ -234,5 +237,9 @@ public class Payment_slimes : Music
         OnShopClick();
         OnFirstComponentClick();
         OnSecondComponentClick();
+    }
+
+    public bool CompareCountPayedSlimes(){
+        return count_payed_slimes <= Utilities.Instance.GetCountSlimesForStar();
     }
 }

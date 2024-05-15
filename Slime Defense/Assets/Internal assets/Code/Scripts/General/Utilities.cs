@@ -11,6 +11,10 @@ public class Utilities : MonoBehaviour
     [SerializeField] private GameObject Start_level;
     [SerializeField] private GameObject End_level;
 
+    [Space]
+    [SerializeField] private int count_slimes_for_star;
+    [SerializeField] private float remainnig_hp_for_star;
+
 
      public enum Elements{
             Fire,
@@ -44,5 +48,13 @@ public class Utilities : MonoBehaviour
 
     public Vector3 GetEndLevel(){
         return End_level.transform.position;
+    }
+
+    public int GetCountSlimesForStar(){
+        return count_slimes_for_star;
+    }
+
+    public float GetRemainigHpForStar(){
+        return remainnig_hp_for_star;
     }
 }

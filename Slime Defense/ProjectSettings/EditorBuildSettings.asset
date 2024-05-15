@@ -7,22 +7,25 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Main_menu.unity
-    guid: be0bc41327ba9604f99b128a1c5bb62f
+    guid: 342ad82ba579a8d41b52c400640168df
   - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Loader_Scene.unity
     guid: e4890489ff7546a4ba262ee51c267114
   - enabled: 1
-    path: Assets/Internal assets/Levels/Scenes/Beutifull_Map.unity
-    guid: 2673249fff09f76448dada26f14624d1
-  - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Level_1.unity
-    guid: f2c0d586e64934443b5a35a6c50c3872
+    guid: 7cb553e679a372b45853def1a438705b
   - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Level_2.unity
-    guid: c302ab2f7fb2bc44bb0c5223594a3800
+    guid: 539d0f33a78151e45b0b89f49b327c68
   - enabled: 1
     path: Assets/Internal assets/Levels/Scenes/Level_3.unity
-    guid: 0d743c37fe9dd6643b83c914b25e2a89
+    guid: 38ae7c124ce67e641ac66ad3e137858c
+  - enabled: 1
+    path: Assets/Internal assets/Levels/Scenes/Level_4.unity
+    guid: 65ac9b98465d3f54d9867fdd5fae26e2
+  - enabled: 1
+    path: Assets/Internal assets/Levels/Scenes/Level_5.unity
+    guid: fd3c67defc0e0d043b6059adee6681b0
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
       guid: e42da33d5cecd274ea2d547235229226, type: 2}

@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class Menu_scripts : Music
 {
@@ -12,16 +14,29 @@ public class Menu_scripts : Music
     [SerializeField] private GameObject panel_game_over_lose;
     [SerializeField] private GameObject Bt_result;
 
+    [Space]
+    [SerializeField] private GameObject star_def_castle_hp;
+    [SerializeField] private GameObject star_def_slimes_count;
+    [SerializeField] private Sprite filled_star;
+
+
+    public static Func<bool> onEndGameSlimesResult;
+    public static Func<bool> onEndGameHpCastleResult;
+
     private string current_level;
     private int current_level_index ;
 
     public void Awake(){
+        star_def_castle_hp.GetComponentInChildren<TextMeshProUGUI>().text = "Оставшиеся hp башни > " + Utilities.Instance.GetRemainigHpForStar();
+        star_def_slimes_count.GetComponentInChildren<TextMeshProUGUI>().text = "Вызвано менее " + Utilities.Instance.GetCountSlimesForStar() + " слаймов"; 
+
+
         Time.timeScale = 1;
         if (Instance == null)
             Instance = this;
         
         current_level = SceneManager.GetActiveScene().name;
-        //current_level_index = int.Parse(current_level.Split('_')[1]);             вернуть потом на место
+        current_level_index = int.Parse(current_level.Split('_')[1]);             
     }
 
     public void OnPauseClick(){
@@ -64,6 +79,9 @@ public class Menu_scripts : Music
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+
+    
+
     public void GameOver(bool isWinner = false){
         mixer.SetFloat("General_volume", PlayerPrefs.GetFloat("Volume of music", 0f) -10f);
 
@@ -82,9 +100,36 @@ public class Menu_scripts : Music
             panel_game_over.SetActive(true);
             PlaySound(sounds[1]);
 
-            if (current_level_index >= PlayerPrefs.GetInt("Available level", 1)){
-            PlayerPrefs.SetInt("Available level", current_level_index + 1);
-        }
+            /*if (current_level_index >= PlayerPrefs.GetInt("Available level", 1)){
+                PlayerPrefs.SetInt("Available level", current_level_index + 1);
+            }*/
+
+            //+2 объекта-текста, в которые прописываются условия. Можно в Awake пихнуть
+            //
+
+            int stars = 1;
+
+            if (onEndGameHpCastleResult.Invoke()){
+                stars++;
+                star_def_castle_hp.GetComponentInChildren<Image>().sprite = filled_star;
+            }
+                //добавляем звезду
+            
+            if (onEndGameSlimesResult.Invoke()) {
+                stars++; 
+                star_def_slimes_count.GetComponentInChildren<Image>().sprite = filled_star;
+            }
+                //добавляем звезду
+
+            
+            int diff_stars = stars - PlayerPrefs.GetInt("Stars of level " + current_level_index.ToString(), 0);
+
+            if (diff_stars > 0){
+                int avaible_stars = PlayerPrefs.GetInt("avaible stars", 0);
+                PlayerPrefs.SetInt("avaible stars", avaible_stars + diff_stars);
+                PlayerPrefs.SetInt("Stars of level " + current_level_index.ToString(), stars);
+            }
+            
         }
 
     }

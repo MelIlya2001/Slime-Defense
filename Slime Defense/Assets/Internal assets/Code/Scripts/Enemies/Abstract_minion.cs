@@ -89,7 +89,7 @@ public class Abstract_minion : Music, I_Abstract_character
     }
 
 
-    protected void AutoAttack(Collider target)
+    protected virtual void AutoAttack(Collider target)
     {
         target.gameObject.GetComponent<I_Abstract_character>().TakeDamage(point_damage);
     }

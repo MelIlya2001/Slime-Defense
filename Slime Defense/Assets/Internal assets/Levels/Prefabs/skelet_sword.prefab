@@ -2696,7 +2696,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 77fa19b66b1333d4b8e57c2334012b4a, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
@@ -2746,7 +2746,7 @@ MonoBehaviour:
   mixer: {fileID: 24100000, guid: 206937700aa23924c83d43cd641ed3f2, type: 2}
   type: 0
   count_gold: 20
-  speed: 10
+  speed: 8
   move_direction: {x: 0, y: 0, z: 1}
   max_hp: 5
   point_damage: 1
